@@ -40,11 +40,16 @@ class DrawerMenu extends Component {
 		this.closeDrawer();
 	}
 	gotoTest() {
-		myNavigator.push({
-		  id: 'Test',
-		  name: '测试页面',
-		});
-		this.closeDrawer();
+		// if(myNavigator.route == 'Test'){
+		// 	return null;
+		// }else{
+			myNavigator.push({
+			  id: 'Test',
+			  name: '测试页面',
+			});
+			this.closeDrawer();
+		// }
+		
 	}
 	
     renderScene(route, navigator) {
@@ -59,7 +64,8 @@ class DrawerMenu extends Component {
 		if (routeId === 'Test') {
 		  return (
 		      <Test
-		          navigator={navigator} {...route.passProps} />
+		      	route={route}
+		      	navigator={navigator} {...route.passProps} />
 		  );
 		}
 
@@ -70,7 +76,7 @@ class DrawerMenu extends Component {
 
     render() {
     	var navigationView = (
-	        <View style={{flex: 1, backgroundColor: 'blue'}}>
+	        <View style={{flex: 1, backgroundColor: '#363636'}}>
 	            <Text style={styles.menuTitle}>导航栏标题</Text>
 
 	            <TouchableHighlight onPress={this.gotoMain.bind(this)}>
