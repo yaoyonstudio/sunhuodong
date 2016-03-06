@@ -13,6 +13,8 @@ import React, {
 var Main = require('./Main');
 var Test = require('./Test');
 
+var TopicWebView = require('./TopicWebView');
+
 class DrawerMenu extends Component {
 	constructor(props) {
     	super(props);
@@ -73,6 +75,16 @@ class DrawerMenu extends Component {
 				{...this.props}
 				{...route.passProps} />
 		  );
+		}
+
+		if (routeId === 'TopicWebView') {
+			return (
+				<TopicWebView
+					routeId={routeId}
+					navigator={navigator}
+					{...this.props}
+					{...route.passProps} />
+			);
 		}
 
 	    //return this.noRoute(navigator);
