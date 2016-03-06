@@ -14,6 +14,7 @@ class Main extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Here is the Main Page.</Text>
+        <Text>{this.props.routeId}</Text>
       </View>
     );
   }

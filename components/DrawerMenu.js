@@ -25,47 +25,53 @@ class DrawerMenu extends Component {
 		this.refs['DRAWER'].closeDrawer();
 	}
 
-	gotoMain() {
+	goToMain() {
 		myNavigator.push({
 		  id: 'Main',
 		  name: 'Main页面',
 		});
 		this.closeDrawer();
 	}	
-	gotoPostList() {
+	goToPostList() {
 		myNavigator.push({
 		  id: 'PostList',
 		  name: '文章列表',
 		});
 		this.closeDrawer();
 	}
-	gotoTest() {
-		// if(myNavigator.route == 'Test'){
-		// 	return null;
-		// }else{
+	goToTest() {
+		 if(this.props.routeId == 'Test'){
+		 	this.openDrawer();
+		 }else{
 			myNavigator.push({
 			  id: 'Test',
 			  name: '测试页面',
 			});
 			this.closeDrawer();
-		// }
+		 }
 		
 	}
+
 	
     renderScene(route, navigator) {
 	    var routeId = route.id;
 	    if (routeId === 'Main') {
 	      return (
 	          <Main
-	              navigator={navigator} />
+				  routeId = {routeId}
+	              navigator={navigator}
+				  {...this.props}
+	              {...route.passProps} />
 	      );
 	    }
 	    
 		if (routeId === 'Test') {
 		  return (
 		      <Test
-		      	route={route}
-		      	navigator={navigator} {...route.passProps} />
+		      	routeId={routeId}
+		      	navigator={navigator}
+				{...this.props}
+				{...route.passProps} />
 		  );
 		}
 
@@ -79,7 +85,7 @@ class DrawerMenu extends Component {
 	        <View style={{flex: 1, backgroundColor: '#363636'}}>
 	            <Text style={styles.menuTitle}>导航栏标题</Text>
 
-	            <TouchableHighlight onPress={this.gotoMain.bind(this)}>
+	            <TouchableHighlight onPress={this.goToMain.bind(this)}>
 	            	<Text style={styles.menuItem}>首页</Text>
 	            </TouchableHighlight>
 	            
@@ -87,7 +93,7 @@ class DrawerMenu extends Component {
 	            	<Text style={styles.menuItem}>列表页</Text>
 	            </TouchableHighlight>
 
-	            <TouchableHighlight onPress={this.gotoTest.bind(this)}>
+	            <TouchableHighlight onPress={() => this.goToTest(myNavigator)}>
 	            	<Text style={styles.menuItem}>测试页</Text>
 	            </TouchableHighlight>
 	            	            

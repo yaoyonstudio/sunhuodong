@@ -14,6 +14,8 @@ class Test extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Here is a test.</Text>
+        <Text>{this.props.routeId}</Text>
+        <Text>{this.props.rr}</Text>
       </View>
     );
   }
