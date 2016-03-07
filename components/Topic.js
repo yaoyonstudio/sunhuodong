@@ -32,12 +32,12 @@ class Topic extends Component {
         fetch(this.state.requestUrl)
             .then((response) => response.json())
             .then((responseData) => {
-                console.log(responseData);
+                //console.log(responseData);
                 this.setState({
                     dataSource: this.state.dataSource.cloneWithRows(responseData),
                     isLoad:true,
                 });
-                console.log(this.state.dataSource);
+                //console.log(this.state.dataSource);
             })
             .done();
     }
@@ -49,6 +49,7 @@ class Topic extends Component {
             component:TopicWebView,
             passProps:{
                 htmlUrl:post.htmlUrl,
+                title:post.title
             }
         });
     };

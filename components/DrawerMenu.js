@@ -11,6 +11,7 @@ import React, {
 } from 'react-native';
 
 var Main = require('./Main');
+var Login = require('./Login');
 var Test = require('./Test');
 
 var TopicWebView = require('./TopicWebView');
@@ -20,11 +21,11 @@ class DrawerMenu extends Component {
     	super(props);
     }
 
-	openDrawer(){
-		this.refs['DRAWER'].openDrawer();
-	};
+    openDrawer(){
+        this.refs['DRAWER'].openDrawer();
+    };
 	closeDrawer(){
-		this.refs['DRAWER'].closeDrawer();
+        this.refs['DRAWER'].closeDrawer();
 	}
 
 	goToMain() {
@@ -62,10 +63,21 @@ class DrawerMenu extends Component {
 	          <Main
 				  routeId = {routeId}
 	              navigator={navigator}
+                  openDrawer={this.openDrawer.bind(this)}
 				  {...this.props}
 	              {...route.passProps} />
 	      );
 	    }
+
+        if (routeId === 'Login') {
+            return (
+                <Login
+                    routeId = {routeId}
+                    navigator={navigator}
+                    {...this.props}
+                    {...route.passProps} />
+            );
+        }
 	    
 		if (routeId === 'Test') {
 		  return (

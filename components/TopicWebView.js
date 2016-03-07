@@ -12,6 +12,7 @@ import React, {
     Dimensions
     } from 'react-native';
 
+var TopBackShareBar = require('./TopBackShareBar');
 
 class TopicWebView extends Component {
     constructor(props){
@@ -23,25 +24,33 @@ class TopicWebView extends Component {
     }
 
     render(){
-        var htmlUrl = this.props.htmlUrl;
-
         return (
             <View style={{flex:1}}>
-
-            <WebView
-                style={{height:this.state.height}}
-                source={{uri:htmlUrl}}
-                startInLoadingState={true}
-                domStorageEnabled={false}
-                javaScriptEnabled={true}
-                >
-            </WebView>
+                <TopBackShareBar title={this.props.title} />
+                <WebView
+                    style={{height:this.state.height}}
+                    source={{uri:this.props.htmlUrl}}
+                    startInLoadingState={true}
+                    domStorageEnabled={false}
+                    javaScriptEnabled={true}
+                    >
+                </WebView>
             </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    TopBarContainer: {
+        width:Dimensions.get('window').width,
+        height: 56,
+        backgroundColor: '#0a8acd',
+    },
+    toolbar: {
+        width:Dimensions.get('window').width,
+        height: 56,
+        backgroundColor: '#0a8acd',
+    },
     TopicWebViewContainer:{
         flex:1,
     }

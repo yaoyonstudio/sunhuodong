@@ -5,29 +5,52 @@ import React, {
     StyleSheet,
     Text,
     View,
+    BackAndroid,
     ToolbarAndroid,
+    Dimensions
     } from 'react-native';
 
-class TopBar extends Component {
+var Ionicons = require('react-native-vector-icons/Ionicons');
+
+
+class TopBackShareBar extends Component {
+    goToLogin() {
+        myNavigator.push({
+            id: 'Login',
+            name: '登录页面',
+        });
+    }
+
     render() {
+        var shareActions = [
+            {title: '登录', iconName: 'person', iconColor:'#ffffff',iconSize:24 ,show:'always'}
+        ];
         return (
-            <ToolbarAndroid
-                actions={toolbarActions}
-                navIcon={require('../img/menu2.png')}
-                onIconClicked = { this.props.openDrawer }
+
+            <Ionicons.ToolbarAndroid
+                actions={shareActions}
+                onActionSelected={this.goToLogin.bind(this)}
+                navIconName="android-menu"
+                onIconClicked={this.props.onIconClicked}
                 style={styles.toolbar}
-                title="阳光活动网"></ToolbarAndroid>
+                titleColor="white"
+                title={this.props.title}
+                />
         );
     }
 }
-var toolbarActions = [
-    {title: '用户登录', icon: require('../img/user.png'), show: 'always'},
-];
+
 const styles = StyleSheet.create({
-    toolbar: {
-        backgroundColor: '#e9eaed',
+    TopBarContainer: {
+        width:Dimensions.get('window').width,
         height: 56,
+        backgroundColor: '#0a8acd',
+    },
+    toolbar: {
+        width:Dimensions.get('window').width,
+        height: 56,
+        backgroundColor: '#0a8acd',
     },
 });
 
-module.exports = TopBar;
+module.exports = TopBackShareBar;

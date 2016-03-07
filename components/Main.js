@@ -6,18 +6,35 @@ import React, {
   Text,
   View,
   ScrollView,
+  BackAndroid,
   TouchableHighlight,
   TouchableOpacity
 } from 'react-native';
 
+var TopBar = require('./TopBar');
 var Slider = require('./Slider');
 var ServiceIcon = require('./ServiceIcon');
 var Topic = require('./Topic');
 
+BackAndroid.addEventListener('hardwareBackPress', () => {
+    if (myNavigator && myNavigator.getCurrentRoutes().length > 1) {
+        myNavigator.pop();
+        return true;
+    }
+    return false;
+});
+
 class Main extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+
   render() {
     return (
       <ScrollView style={styles.container}>
+        <TopBar onIconClicked={this.props.openDrawer} title="莞家生活" />
+
         <Slider />
 
         <ServiceIcon />
