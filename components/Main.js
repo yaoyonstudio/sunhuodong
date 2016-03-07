@@ -15,6 +15,8 @@ var TopBar = require('./TopBar');
 var Slider = require('./Slider');
 var ServiceIcon = require('./ServiceIcon');
 var Topic = require('./Topic');
+var Ad = require('./Ad');
+var ConvenientIcon = require('./ConvenientIcon');
 
 BackAndroid.addEventListener('hardwareBackPress', () => {
     if (myNavigator && myNavigator.getCurrentRoutes().length > 1) {
@@ -32,43 +34,16 @@ class Main extends Component {
 
   render() {
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView>
         <TopBar onIconClicked={this.props.openDrawer} title="莞家生活" />
-
         <Slider />
-
         <ServiceIcon />
-
         <Topic />
-
-
-
-
-        <Text>{this.props.routeId}</Text>
-        <Text>{this.props.routeId}</Text>
-        <Text>{this.props.routeId}</Text>
-        <Text style={styles.welcome}>Here is the Main Page.</Text>
-        <Text>{this.props.routeId}</Text>
+        <Ad />
+        <ConvenientIcon />
       </ScrollView>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
-
 
 module.exports = Main;

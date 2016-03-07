@@ -73,7 +73,12 @@ class Topic extends Component {
     renderLoadingView(){
         return (
             <View style={styles.TopicContainer}>
-                <Text>Loading... please wait!</Text>
+                <View style={styles.TopicMenu}>
+                    <Text style={styles.TopicMenuTitle}>专题</Text>
+                </View>
+                <View style={styles.TopicContainer}>
+                    <Text>Loading... please wait!</Text>
+                </View>
             </View>
         );
     }

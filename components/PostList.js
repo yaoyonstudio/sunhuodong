@@ -13,7 +13,7 @@ import React, {
     Navigator,
     } from 'react-native';
 
-//var styles = require('./styles');
+
 var PostDetail = require('./PostDetail');
 
 var API_URL = "http://www.sunhuodong.com/wp-json/wp/v2/posts";
@@ -63,42 +63,32 @@ class PostList extends Component {
         });
     };
 
-    renderScene(route, navigator) {
-        return (
-            <View style={styles.all}>
-                <ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={this.renderPost.bind(this)}
-                    style={styles.listView}
-                    />
-                <View>
-                    <TouchableHighlight style={styles.btn} underlayColor='#9400d3' onPress={this.fetchData.bind(this)}>
-                        <Text styl={styles.btntxt}>更多文章</Text>
-                    </TouchableHighlight>
-                </View>
-            </View>
-        );
-    }
-
     renderPost(post){
-        //var postDate = post.date.substring(0,10);
-        var imgurl;
+
         if(!post.thumbnailurl){
-            imgurl = "http://www.sunhuodong.com/uploads/noimage.png";
-        }else{
-            imgurl = post.thumbnailurl
-        }
-        return (
-            <TouchableHighlight onPress={() => this.showPostDetail(post)} underlayColor='#dddddd'>
-                <View style={styles.container}>
-                    <Image source={{uri:imgurl}} style={styles.thumbnail} />
-                    <View style={styles.rightContainer}>
-                        <Text style={styles.title}>{post.title.rendered}</Text>
-                        <Text style={styles.year}>{post.date.substring(0,10)}</Text>
+            return (
+                <TouchableHighlight onPress={() => this.showPostDetail(post)} underlayColor='#cccccc'>
+                    <View style={styles.container}>
+                        <View style={styles.rightContainer}>
+                            <Text style={styles.title} numberOfLines={2}>{post.title.rendered}</Text>
+                            <Text style={styles.year}>{post.date.substring(0,10)}</Text>
+                        </View>
                     </View>
-                </View>
-            </TouchableHighlight>
-        );
+                </TouchableHighlight>
+            )
+        }else{
+            return (
+                <TouchableHighlight onPress={() => this.showPostDetail(post)} underlayColor='#cccccc'>
+                    <View style={styles.container}>
+                        <Image source={{uri:post.thumbnailurl}} style={styles.thumbnail} />
+                        <View style={styles.rightContainer}>
+                            <Text style={styles.title}  numberOfLines={2}>{post.title.rendered}</Text>
+                            <Text style={styles.year}>{post.date.substring(0,10)}</Text>
+                        </View>
+                    </View>
+                </TouchableHighlight>
+            );
+        }
     };
 
     renderLoadingView(){
@@ -110,51 +100,85 @@ class PostList extends Component {
     }
 
     render() {
-        var NavigationBarRouteMapper = {
-            LeftButton(route, navigator, index, navState) {
-                return (
-                    <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}
-                                      onPress={() => navigator.parentNavigator.pop()}>
-                        <Text style={{color: 'white', margin: 10,}}>
-                            返回
-                        </Text>
-                    </TouchableOpacity>
-                );
-            },
-            RightButton(route, navigator, index, navState) {
-                return (
-                    <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
-                        <Text style={{color: 'white', margin: 10,}}>
-                            登陆
-                        </Text>
-                    </TouchableOpacity>
-                );
-            },
-            Title(route, navigator, index, navState) {
-                return (
-                    <View style={{flex: 1, justifyContent: 'center', backgroundColor: '#333333'}}>
-                        <Text style={{color: 'white', margin: 10, fontSize: 16}}>
-                            莞家生活
-                        </Text>
-                    </View>
-                );
-            }
-        };
 
         if(!this.state.loaded){
             return this.renderLoadingView();
         }
         return (
-            <Navigator
-                renderScene={this.renderScene.bind(this)}
-                navigator={this.props.navigator}
-                navigationBar={
-                <Navigator.NavigationBar style={{backgroundColor: '#246dd5'}}
-                routeMapper={NavigationBarRouteMapper} />
-                }
-                />
-        )
+            <View style={styles.all}>
+                <ListView
+                    dataSource={this.state.dataSource}
+                    renderRow={this.renderPost.bind(this)}
+                    style={styles.listView}
+                    />
+                <View>
+                    <TouchableHighlight style={styles.btn} underlayColor='#9400d3' onPress={this.fetchData.bind(this)}>
+                        <Text styl={styles.btntxt} >更多文章</Text>
+                    </TouchableHighlight>
+                </View>
+            </View>
+        );
     };
 }
+
+
+const styles = StyleSheet.create({
+    all:{
+        flex:1,
+        marginTop:56,
+    },
+
+    container: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF',
+        padding:6,
+    },
+    rightContainer: {
+        flex: 1,
+        justifyContent:'flex-start'
+    },
+    title: {
+        fontSize: 16,
+        marginBottom: 8,
+        textAlign: 'left',
+        color:'#4f4f4f'
+    },
+    year: {
+        textAlign: 'left',
+    },
+    thumbnail: {
+        width: 80,
+        height: 80,
+        marginRight:12,
+    },
+    listView: {
+
+    },
+    btn: {
+        margin:6,
+        backgroundColor:'#00bfff',
+        borderRadius:6,
+        flex:1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingTop:10,
+        paddingBottom:10,
+    },
+    btntxt: {
+        textAlign:'center',
+    },
+    featuredImg: {
+        width:300,
+        height:200,
+    },
+    postDetailContainer:{
+        flex:1,
+        marginTop:56,
+        backgroundColor:'yellow',
+    }
+});
 
 module.exports = PostList;
