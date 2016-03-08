@@ -9,6 +9,7 @@ var {
     StyleSheet,
     Text,
     View,
+    Image,
     TouchableHighlight,
     Platform
     } = React;
@@ -16,8 +17,8 @@ var {
 var GiftedListView = require('react-native-gifted-listview');
 var GiftedSpinner = require('react-native-gifted-spinner');
 
-var API_URL = "http://www.sunhuodong.com/wp-json/wp/v2/posts";
-var PAGE_SIZE = 8;
+var TopBar = require('./TopBar');
+var PostDetail = require('./PostDetail');
 
 
 var Example = React.createClass({
@@ -30,18 +31,22 @@ var Example = React.createClass({
      * @param {object} options Inform if first load
      */
     _onFetch(page = 1, callback, options) {
-    fetch(API_URL + '?filter[posts_per_page]=' + PAGE_SIZE + '?page=' + page)
-        .then((response) => response.json())
-        .then((responseData) => {
-            this.data = responseData;
-            page++;
-            callback(this.data);
-        })
-        .catch((error) => {
-            console.log(error);
-            callback(null);
-        })
-        .done();
+        let API_URL = this.props.Request_Post.API_URL;
+        let CATID = this.props.Request_Post.CATID;
+        let PAGE_SIZE = this.props.Request_Post.PAGE_SIZE;
+
+        fetch(API_URL + '?filter[posts_per_page]=' + PAGE_SIZE + '&filter[cat]=' + CATID + '&page=' + page)
+            .then((response) => response.json())
+            .then((responseData) => {
+                this.data = responseData;
+                page++;
+                callback(this.data);
+            })
+            .catch((error) => {
+                console.log(error);
+                callback(null);
+            })
+            .done();
     },
 
 
@@ -50,7 +55,15 @@ var Example = React.createClass({
      * @param {object} rowData Row data
      */
         _onPress(rowData) {
-        console.log(rowData+' pressed');
+        this.props.navigator.push({
+            id:'PostDetail',
+            title:rowData.title.rendered,
+            component:PostDetail,
+            passProps:{
+                postTitle:rowData.title.rendered,
+                post:rowData
+            }
+        });
     },
 
     /**
@@ -58,16 +71,41 @@ var Example = React.createClass({
      * @param {object} rowData Row data
      */
         _renderRowView(rowData) {
-        console.log(rowData);
-        return (
-            <TouchableHighlight
-                style={customStyles.row}
-                underlayColor='#c8c7cc'
-                onPress={() => this._onPress(rowData)}
-                >
-                <Text>dsfsf</Text>
-            </TouchableHighlight>
-        );
+
+        if(rowData.thumbnailurl){
+            return (
+                <TouchableHighlight
+                    style={customStyles.row}
+                    underlayColor='#c8c7cc'
+                    onPress={() => this._onPress(rowData)}
+                    >
+                    <View style={customStyles.PostItem}>
+                        <Image source={{uri:rowData.thumbnailurl}} style={customStyles.PostThumbnail} />
+                        <View style={customStyles.PostText}>
+                            <Text style={customStyles.PostTitle}>{rowData.title.rendered}</Text>
+                            <Text style={customStyles.PostDate}>{rowData.date.substring(0,10)}</Text>
+                        </View>
+                    </View>
+                </TouchableHighlight>
+            );
+        }else{
+            return (
+                <TouchableHighlight
+                    style={customStyles.row}
+                    underlayColor='#c8c7cc'
+                    onPress={() => this._onPress(rowData)}
+                    >
+                    <View style={customStyles.PostItem}>
+                        <View style={customStyles.PostText}>
+                            <Text style={customStyles.PostTitle}>{rowData.title.rendered}</Text>
+                            <Text style={customStyles.PostDate}>{rowData.date.substring(0,10)}</Text>
+                        </View>
+                    </View>
+                </TouchableHighlight>
+            );
+        }
+
+
     },
 
     /**
@@ -150,7 +188,7 @@ var Example = React.createClass({
                 style={customStyles.paginationView}
                 >
                 <Text style={[customStyles.actionsLabel, {fontSize: 13}]}>
-                    Load more
+                    加载更多
                 </Text>
             </TouchableHighlight>
         );
@@ -215,9 +253,9 @@ var Example = React.createClass({
     render() {
         return (
             <View style={screenStyles.container}>
-                <View style={screenStyles.navBar}>
-                    <Text style={screenStyles.navBarTitle}>Gifted ListView</Text>
-                </View>
+
+                <TopBar onIconClicked={this.props.openDrawer} title="莞家生活" />
+
                 <GiftedListView
                     rowView={this._renderRowView}
 
@@ -243,7 +281,7 @@ var Example = React.createClass({
                     renderSeparator={this._renderSeparatorView}
 
                     withSections={false} // enable sections
-                    sectionHeaderView={this._renderSectionHeaderView}
+                    //sectionHeaderView={this._renderSectionHeaderView}
 
                     PullToRefreshViewAndroidProps={{
             colors: ['#fff'],
@@ -289,7 +327,6 @@ var customStyles = {
     },
     row: {
         padding: 10,
-        height: 44,
     },
     header: {
         backgroundColor: '#50a4ff',
@@ -297,6 +334,27 @@ var customStyles = {
     },
     headerTitle: {
         color: '#fff',
+    },
+    PostItem:{
+        flex:1,
+        flexDirection:'row',
+    },
+    PostText:{
+        flex:1,
+    },
+    PostTitle: {
+        fontSize: 16,
+        marginBottom: 8,
+        textAlign: 'left',
+        color:'#4f4f4f'
+    },
+    PostDate: {
+        textAlign: 'left',
+    },
+    PostThumbnail: {
+        width: 80,
+        height: 80,
+        marginRight:12,
     },
 };
 

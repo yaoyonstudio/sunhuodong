@@ -9,23 +9,13 @@ import React, {
     TouchableHighlight,
     TouchableOpacity,
     Navigator,
-    Dimensions,
     WebView,
     } from 'react-native';
 
-var TopBackShareBar = require('./TopBackShareBar');
+//var styles = require('./styles');
 
 class PostDetail extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            width: Dimensions.get('window').width,
-            height: Dimensions.get('window').height,
-        };
-    }
-
-    render(){
-        var w=this.state.width - 20;
+    renderScene(route, navigator) {
         var post = this.props.post;
         var imgurl = ( typeof post.featuredimgurl !== 'undefined' ) ? post.featuredimgurl : '';
         var title = (typeof post.title !== 'undefined' ) ? post.title : '';
@@ -41,7 +31,7 @@ class PostDetail extends Component {
                   body { margin: 0; padding: 0; background: #eee;width:100%;}
                   .ViewContainer{width:100%;padding:10pt;box-sizing:border-box;-webkit-box-sizing:border-box;}
                   .ContentContainer{width:100%;overflow:hidden;}
-                  .ContentContainer img {clear:both; display:block; margin:0 auto;text-align:center; width:${w}pt !important; max-width:100% !important; height:auto !important;}
+                  .ContentContainer img { display:block !important; max-width:100% !important; height:auto !important;}
                   .ContentContainer h2 { font-size:18pt; padding: 10pt; margin: 0; text-align: center; color: #33f; }
                   .ContentContainer p{ font-size:12pt; }
                 </style>
@@ -61,8 +51,6 @@ class PostDetail extends Component {
         contentHTML += '</div></body></html>';
 
         return (
-            <View style={{flex:1}}>
-                <TopBackShareBar title={this.props.title} />
                 <WebView
                     style={styles.postDetailContainer}
                     source={{html:contentHTML}}
@@ -71,15 +59,61 @@ class PostDetail extends Component {
                     javaScriptEnabled={true}
                     >
                 </WebView>
-            </View>
         );
+    };
 
+    render(){
+        var navtitle = this.props.postTitle;
+        var NavigationBarRouteMapper = {
+            LeftButton(route, navigator, index, navState) {
+                return (
+                    <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}
+                                      onPress={() => navigator.parentNavigator.pop()}>
+                        <Text style={{color: 'white', margin: 10,}}>
+                            返回
+                        </Text>
+                    </TouchableOpacity>
+                );
+            },
+            RightButton(route, navigator, index, navState) {
+                return (
+                    <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
+                        <Text style={{color: 'white', margin: 10,}}>
+                            分享
+                        </Text>
+                    </TouchableOpacity>
+                );
+            },
+            Title(route, navigator, index, navState) {
+                return null;
+                //return (
+                //    //<View style={{flex: 1, justifyContent: 'center', backgroundColor: '#333333'}}>
+                //    //    <Text style={{color: 'white', margin: 10, fontSize: 16}}>
+                //    //        {navtitle}
+                //    //    </Text>
+                //    //</View>
+                //);
+            }
+        };
+
+        return (
+          <Navigator
+            renderScene={this.renderScene.bind(this)}
+            navigator={this.props.navigator}
+            navigationBar={
+                <Navigator.NavigationBar style={{backgroundColor: '#246dd5'}}
+                routeMapper={NavigationBarRouteMapper} />
+                }
+           />
+        );
     }
 }
 
 const styles = StyleSheet.create({
     postDetailContainer:{
         flex:1,
+        marginTop:56,
+        backgroundColor:'yellow',
     }
 });
 

@@ -14,10 +14,9 @@ import React, {
 
 var Main = require('./Main');
 var Login = require('./Login');
-var PostList = require('./PostList');
+var PostList = require('./PostList2');
+var PostListTest = require('./PostListTest');
 var PostDetail = require('./PostDetail');
-var Convenient = require('./Convenient');
-var NearBy = require('./NearBy');
 var Test = require('./Test');
 
 var TopicWebView = require('./TopicWebView');
@@ -78,163 +77,78 @@ class DrawerMenu extends Component {
 	
     renderScene(route, navigator) {
 	    var routeId = route.id;
-        var Component = null;
 
-        switch (routeId){
-            case 'Main':
-                return (
-                    <Main
-                        routeId = {routeId}
-                        navigator={navigator}
-                        openDrawer={this.openDrawer.bind(this)}
-                        {...this.props}
-                        {...route.passProps} />
-                );
-                break;
-            case 'Login':
-                return (
-                    <Login
-                        routeId = {routeId}
-                        navigator={navigator}
-                        {...this.props}
-                        {...route.passProps} />
-                );
-                break;
-            case 'PostListTest':
-                var Request_Post = {
-                    API_URL:"http://www.sunhuodong.com/wp-json/wp/v2/posts",
-                    CATID:4,
-                    PAGE_SIZE:8,
-                };
-                return (
-                    <PostList
-                        routeId={routeId}
-                        navigator={navigator}
-                        Request_Post={Request_Post}
-                        openDrawer={this.openDrawer.bind(this)}
-                        {...this.props}
-                        {...route.passProps} />
-                );
-                break;
-            case 'HDZX':
-                var Request_Post = {
-                    API_URL:"http://www.sunhuodong.com/wp-json/wp/v2/posts",
-                    CATID:[4,3,5,8],
-                    PAGE_SIZE:8,
-                };
-                return (
-                    <PostList
-                        routeId={routeId}
-                        navigator={navigator}
-                        Request_Post={Request_Post}
-                        openDrawer={this.openDrawer.bind(this)}
-                        title="活动资讯"
-                        {...this.props}
-                        {...route.passProps} />
-                );
-                break;
-            case 'YHCX':
-                var Request_Post = {
-                    API_URL:"http://www.sunhuodong.com/wp-json/wp/v2/posts",
-                    CATID:2,
-                    PAGE_SIZE:8,
-                };
-                return (
-                    <PostList
-                        routeId={routeId}
-                        navigator={navigator}
-                        Request_Post={Request_Post}
-                        openDrawer={this.openDrawer.bind(this)}
-                        title="优惠促销"
-                        {...this.props}
-                        {...route.passProps} />
-                );
-                break;
-            case 'ZCRS':
-                var Request_Post = {
-                    API_URL:"http://www.sameroad.cn/wp-json/wp/v2/posts",
-                    CATID:[6,7,18],
-                    PAGE_SIZE:8,
-                };
-                return (
-                    <PostList
-                        routeId={routeId}
-                        navigator={navigator}
-                        Request_Post={Request_Post}
-                        openDrawer={this.openDrawer.bind(this)}
-                        title="职场人生"
-                        {...this.props}
-                        {...route.passProps} />
-                );
-                break;
-            case 'YDJK':
-                var Request_Post = {
-                    API_URL:"http://www.sousports.cn/wp-json/wp/v2/posts",
-                    CATID:[5,20],
-                    PAGE_SIZE:8,
-                };
-                return (
-                    <PostList
-                        routeId={routeId}
-                        navigator={navigator}
-                        Request_Post={Request_Post}
-                        openDrawer={this.openDrawer.bind(this)}
-                        title="运动健康"
-                        {...this.props}
-                        {...route.passProps} />
-                );
-                break;
-            case 'PostDetail':
-                return (
-                    <PostDetail
-                        routeId={routeId}
-                        navigator={navigator}
-                        {...this.props}
-                        {...route.passProps} />
-                );
-                break;
-            case 'TopicWebView':
-                return (
-                    <TopicWebView
-                        routeId={routeId}
-                        navigator={navigator}
-                        {...this.props}
-                        {...route.passProps} />
-                );
-                break;
-            case 'BMFW':
-                return (
-                    <Convenient
-                        routeId={routeId}
-                        navigator={navigator}
-                        openDrawer={this.openDrawer.bind(this)}
-                        title="便民服务"
-                        {...this.props}
-                        {...route.passProps} />
-                );
-                break;
-            case 'FJXX':
-                return (
-                    <NearBy
-                        routeId={routeId}
-                        navigator={navigator}
-                        openDrawer={this.openDrawer.bind(this)}
-                        title="附近信息"
-                        {...this.props}
-                        {...route.passProps} />
-                );
-                break;
-            case 'Test':
-                return (
-                    <Test
-                        routeId={routeId}
-                        navigator={navigator}
-                        {...this.props}
-                        {...route.passProps} />
-                );
-                break;
+
+
+	    if (routeId === 'Main') {
+	      return (
+	          <Main
+				  routeId = {routeId}
+	              navigator={navigator}
+                  openDrawer={this.openDrawer.bind(this)}
+				  {...this.props}
+	              {...route.passProps} />
+	      );
+	    }
+
+        if (routeId === 'Login') {
+            return (
+                <Login
+                    routeId = {routeId}
+                    navigator={navigator}
+                    {...this.props}
+                    {...route.passProps} />
+            );
+        }
+	    
+		if (routeId === 'Test') {
+		  return (
+		      <Test
+		      	routeId={routeId}
+		      	navigator={navigator}
+				{...this.props}
+				{...route.passProps} />
+		  );
+		}
+
+        if (routeId === 'PostDetail') {
+            return (
+                <PostDetail
+                    routeId={routeId}
+                    navigator={navigator}
+                    {...this.props}
+                    {...route.passProps} />
+            );
         }
 
+        if (routeId === 'PostListTest') {
+            var Request_Post = {
+                API_URL:"http://www.sunhuodong.com/wp-json/wp/v2/posts",
+                CATID:4,
+                PAGE_SIZE:8,
+            };
+            return (
+                <PostListTest
+                    routeId={routeId}
+                    navigator={navigator}
+                    Request_Post={Request_Post}
+                    openDrawer={this.openDrawer.bind(this)}
+                    {...this.props}
+                    {...route.passProps} />
+            );
+        }
+
+		if (routeId === 'TopicWebView') {
+			return (
+				<TopicWebView
+					routeId={routeId}
+					navigator={navigator}
+					{...this.props}
+					{...route.passProps} />
+			);
+		}
+
+	    //return this.noRoute(navigator);
 	}
 
     render() {
@@ -246,7 +160,7 @@ class DrawerMenu extends Component {
                 <View style={styles.menuMainContent}>
                     <View style={styles.menuLeft}>
                         <View style={styles.menuItem}>
-                            <TouchableOpacity onPress={() => this.goTo({id:'Main',name:'首页'})}>
+                            <TouchableOpacity>
                                 <Image
                                     style={styles.menuItemImg}
                                     source={require('../img/1.png')}
@@ -255,7 +169,7 @@ class DrawerMenu extends Component {
                             </TouchableOpacity>
                         </View>
                         <View style={styles.menuItem}>
-                            <TouchableOpacity onPress={() => this.goTo({id:'HDZX',name:'活动资讯'})}>
+                            <TouchableOpacity>
                                 <Image
                                     style={styles.menuItemImg}
                                     source={require('../img/3.png')}
@@ -264,7 +178,7 @@ class DrawerMenu extends Component {
                             </TouchableOpacity>
                         </View>
                         <View style={styles.menuItem}>
-                            <TouchableOpacity onPress={() => this.goTo({id:'FJXX',name:'附近信息'})}>
+                            <TouchableOpacity>
                                 <Image
                                     style={styles.menuItemImg}
                                     source={require('../img/5.png')}
@@ -273,7 +187,7 @@ class DrawerMenu extends Component {
                             </TouchableOpacity>
                         </View>
                         <View style={styles.menuItem}>
-                            <TouchableOpacity onPress={() => this.goTo({id:'YDJK',name:'运动健康'})}>
+                            <TouchableOpacity>
                                 <Image
                                     style={styles.menuItemImg}
                                     source={require('../img/7.png')}
@@ -285,7 +199,7 @@ class DrawerMenu extends Component {
 
                     <View style={styles.menuRight}>
                         <View style={styles.menuItem}>
-                            <TouchableOpacity onPress={() => this.goTo({id:'ZT',name:'专题'})}>
+                            <TouchableOpacity>
                                 <Image
                                     style={styles.menuItemImg}
                                     source={require('../img/2.png')}
@@ -294,7 +208,7 @@ class DrawerMenu extends Component {
                             </TouchableOpacity>
                         </View>
                         <View style={styles.menuItem}>
-                            <TouchableOpacity onPress={() => this.goTo({id:'YHCX',name:'优惠促销'})}>
+                            <TouchableOpacity>
                                 <Image
                                     style={styles.menuItemImg}
                                     source={require('../img/4.png')}
@@ -303,7 +217,7 @@ class DrawerMenu extends Component {
                             </TouchableOpacity>
                         </View>
                         <View style={styles.menuItem}>
-                            <TouchableOpacity onPress={() => this.goTo({id:'BMFW',name:'便民服务'})}>
+                            <TouchableOpacity>
                                 <Image
                                     style={styles.menuItemImg}
                                     source={require('../img/6.png')}
@@ -312,7 +226,7 @@ class DrawerMenu extends Component {
                             </TouchableOpacity>
                         </View>
                         <View style={styles.menuItem}>
-                            <TouchableOpacity onPress={() => this.goTo({id:'ZCRS',name:'职场人生'})}>
+                            <TouchableOpacity>
                                 <Image
                                     style={styles.menuItemImg}
                                     source={require('../img/8.png')}
@@ -323,6 +237,17 @@ class DrawerMenu extends Component {
                     </View>
                 </View>
 
+                <View>
+                    <TouchableHighlight onPress={() => this.goToTest(myNavigator)}>
+                        <Text style={{fontSize:24,textAlign:'center'}}>测试页</Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight onPress={() => this.goToPostList(myNavigator)}>
+                        <Text style={{fontSize:24,textAlign:'center'}}>文章列表页</Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight onPress={() => this.goToPostListTest(myNavigator)}>
+                        <Text style={{fontSize:24,textAlign:'center'}}>文章列表测试页</Text>
+                    </TouchableHighlight>
+                </View>
             </View>
 
 	    );

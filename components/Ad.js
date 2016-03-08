@@ -34,7 +34,7 @@ class Ad extends Component {
             .then((responseData) => {
                 var ad=[];
                 responseData.forEach(function(item){
-                    console.log(item);
+                    //console.log(item);
                     ad.push(item.adImgUrl);
                 })
                 this.setState({
