@@ -16,6 +16,10 @@ var {
 var GiftedListView = require('react-native-gifted-listview');
 var GiftedSpinner = require('react-native-gifted-spinner');
 
+var API_URL = "http://www.sunhuodong.com/wp-json/wp/v2/posts";
+var PAGE_SIZE = 8;
+
+
 var Example = React.createClass({
 
     /**
@@ -25,19 +29,19 @@ var Example = React.createClass({
      * @param {function} callback Should pass the rows
      * @param {object} options Inform if first load
      */
-        _onFetch(page = 1, callback, options) {
-        setTimeout(() => {
-            var header = 'Header '+page;
-            var rows = {};
-            rows[header] = ['row '+((page - 1) * 3 + 1), 'row '+((page - 1) * 3 + 2), 'row '+((page - 1) * 3 + 3)];
-            if (page === 5) {
-                callback(rows, {
-                    allLoaded: true, // the end of the list is reached
-                });
-            } else {
-                callback(rows);
-            }
-        }, 1000); // simulating network fetching
+    _onFetch(page = 1, callback, options) {
+    fetch(API_URL + '?filter[posts_per_page]=' + PAGE_SIZE + '?page=' + page)
+        .then((response) => response.json())
+        .then((responseData) => {
+            this.data = responseData;
+            page++;
+            callback(this.data);
+        })
+        .catch((error) => {
+            console.log(error);
+            callback(null);
+        })
+        .done();
     },
 
 
@@ -54,13 +58,14 @@ var Example = React.createClass({
      * @param {object} rowData Row data
      */
         _renderRowView(rowData) {
+        console.log(rowData);
         return (
             <TouchableHighlight
                 style={customStyles.row}
                 underlayColor='#c8c7cc'
                 onPress={() => this._onPress(rowData)}
                 >
-                <Text>{rowData}</Text>
+                <Text>dsfsf</Text>
             </TouchableHighlight>
         );
     },
@@ -237,7 +242,7 @@ var Example = React.createClass({
 
                     renderSeparator={this._renderSeparatorView}
 
-                    withSections={true} // enable sections
+                    withSections={false} // enable sections
                     sectionHeaderView={this._renderSectionHeaderView}
 
                     PullToRefreshViewAndroidProps={{
