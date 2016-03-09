@@ -13,6 +13,7 @@ import React, {
     } from 'react-native';
 
 var TopBackShareBar = require('./TopBackShareBar');
+var ShareBox = require('./ShareBox');
 
 class TopicWebView extends Component {
     constructor(props){
@@ -23,10 +24,14 @@ class TopicWebView extends Component {
         };
     }
 
+    openModal() {
+        shareModal.open();
+    }
+
     render(){
         return (
             <View style={{flex:1}}>
-                <TopBackShareBar title={this.props.title} />
+                <TopBackShareBar title={this.props.title} share={this.openModal.bind(this)} />
                 <WebView
                     style={{height:this.state.height}}
                     source={{uri:this.props.htmlUrl}}
@@ -35,6 +40,7 @@ class TopicWebView extends Component {
                     javaScriptEnabled={true}
                     >
                 </WebView>
+                <ShareBox />
             </View>
         );
     }

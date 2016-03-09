@@ -234,6 +234,7 @@ class DrawerMenu extends Component {
                         {...route.passProps} />
                 );
                 break;
+
         }
 
 	}
@@ -323,7 +324,7 @@ class DrawerMenu extends Component {
                         </View>
                     </View>
                 </View>
-
+                <View style={{alignItems:'center',padding:20}}><TouchableOpacity onPress={()=>this.goToTest()}><Text style={{fontSize:30}}>分享测试</Text></TouchableOpacity></View>
             </View>
 
 	    );

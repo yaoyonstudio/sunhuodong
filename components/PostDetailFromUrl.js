@@ -16,7 +16,7 @@ import React, {
 
 var TopBackShareBar = require('./TopBackShareBar');
 
-
+var ShareBox = require('./ShareBox');
 
 class PostDetail extends Component {
     constructor(props){
@@ -59,6 +59,10 @@ class PostDetail extends Component {
                 </View>
             </View>
         );
+    }
+
+    openModal() {
+        shareModal.open();
     }
 
     render(){
@@ -117,7 +121,7 @@ class PostDetail extends Component {
 
         return (
             <View style={{flex:1}}>
-                <TopBackShareBar title={this.props.title} />
+                <TopBackShareBar title={this.props.title} share={this.openModal.bind(this)} />
                 <WebView
                     style={styles.postDetailContainer}
                     source={{html:contentHTML}}
@@ -126,6 +130,7 @@ class PostDetail extends Component {
                     javaScriptEnabled={true}
                     >
                 </WebView>
+                <ShareBox />
             </View>
         );
 

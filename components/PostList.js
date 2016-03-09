@@ -68,7 +68,6 @@ var PostList = React.createClass({
      * @param {object} rowData Row data
      */
         _renderRowView(rowData) {
-
         if(rowData.thumbnailurl){
             return (
                 <TouchableHighlight
@@ -78,7 +77,7 @@ var PostList = React.createClass({
                     onPress={() => this._onPress(rowData)}
                     >
                     <View style={customStyles.PostItem}>
-                        <Image source={{uri:rowData.thumbnailurl}} style={customStyles.PostThumbnail} />
+                        <Image source={{uri:rowData.thumbnailurl}} style={customStyles.PostThumbnail} resizeMode={Image.resizeMode.cover} />
                         <View style={customStyles.PostText}>
                             <Text style={customStyles.PostTitle}>{rowData.title.rendered}</Text>
                             <Text style={customStyles.PostDate}>{rowData.date.substring(0,10)}</Text>
@@ -243,9 +242,9 @@ var PostList = React.createClass({
     /**
      * Render a separator between rows
      */
-        _renderSeparatorView() {
+        _renderSeparatorView(sectionID,rowID) {
         return (
-            <View style={customStyles.separator}/>
+            <View key={'${sectionID}-${rowID}'} style={customStyles.separator}/>
         );
     },
 
@@ -277,7 +276,7 @@ var PostList = React.createClass({
 
                     emptyView={this._renderEmptyView}
 
-                    //renderSeparator={this._renderSeparatorView}
+                    //renderSeparator={(sectionID,rowID) => this._renderSeparatorView(sectionID,rowID)}
 
                     withSections={false} // enable sections
                     //sectionHeaderView={this._renderSectionHeaderView}
@@ -355,7 +354,7 @@ var customStyles = {
         textAlign: 'left',
     },
     PostThumbnail: {
-        width: 80,
+        width: 108,
         height: 80,
         marginRight:12,
     },
