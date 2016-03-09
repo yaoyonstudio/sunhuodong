@@ -16,6 +16,7 @@ var Main = require('./Main');
 var Login = require('./Login');
 var PostList = require('./PostList');
 var PostDetail = require('./PostDetail');
+var PostDetailFromUrl = require('./PostDetailFromUrl');
 var Convenient = require('./Convenient');
 var NearBy = require('./NearBy');
 var Test = require('./Test');
@@ -184,9 +185,9 @@ class DrawerMenu extends Component {
                         {...route.passProps} />
                 );
                 break;
-            case 'PostDetail':
+            case 'PostDetailFromUrl':
                 return (
-                    <PostDetail
+                    <PostDetailFromUrl
                         routeId={routeId}
                         navigator={navigator}
                         {...this.props}

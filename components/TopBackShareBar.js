@@ -25,10 +25,7 @@ class TopBackShareBar extends Component {
 
     render() {
         var shareActions = [
-            {title: 'share to 1', iconName: 'person', iconColor:'#ffffff',iconSize:24 },
-            {title: 'share to 2', iconName: 'star', iconColor:'#ffffff',iconSize:24 },
-            {title: 'share to 3', iconName: 'chatbubbles', iconColor:'#ffffff',iconSize:24 },
-            {title: 'share to 4', iconName: 'aperture', iconColor:'#ffffff',iconSize:24 },
+            {title: '分享', iconName: 'share', iconColor:'#ffffff',iconSize:24,show:'always'},
         ];
         return (
 

@@ -31,19 +31,31 @@ class Main extends Component {
         super(props);
     }
 
-
-  render() {
-    return (
-      <ScrollView>
-        <TopBar onIconClicked={this.props.openDrawer} title="莞家生活" />
-        <Slider />
-        <ServiceIcon />
-        <Topic />
-        <Ad />
-        <ConvenientIcon />
-      </ScrollView>
-    );
-  }
+    render() {
+        return (
+          <View style={{flex:1}}>
+            <TopBar style={styles.MainTop} onIconClicked={this.props.openDrawer} title="莞家生活" />
+            <ScrollView>
+                <Slider />
+                <ServiceIcon />
+                <Topic />
+                <Ad />
+                <ConvenientIcon />
+            </ScrollView>
+          </View>
+        );
+    }
 }
+
+const styles = StyleSheet.create({
+    MainTop:{
+        position:'absolute',
+        top:0,
+        left:0,
+        right:0,
+        height:56,
+    },
+
+})
 
 module.exports = Main;

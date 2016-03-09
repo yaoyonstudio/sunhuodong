@@ -11,36 +11,48 @@ import React, {
 } from 'react-native';
 
 var TopBackBar = require('./TopBackBar');
-
+var LoginBox = require('./LoginBox');
+var Setup = require('./Setup');
 
 class Login extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <TopBackBar title="用户登录" />
-        <Text style={styles.welcome}>Login Page</Text>
-      </View>
+        <View style={styles.LoginContainer}>
+            <TopBackBar style={styles.TopBackBar} title="用户" />
+            <LoginBox style={styles.LoginBox} />
+            <View style={styles.Setup}>
+                <Setup />
+            </View>
+        </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+    LoginContainer: {
+        flex:1,
+        backgroundColor: '#F5FCFF',
+    },
+    TopBackBar:{
+        position:'absolute',
+        top:0,
+        left:0,
+        right:0,
+        height:56,
+    },
+    LoginBox:{
+        flex:1,
+    },
+    Setup:{
+        position:'absolute',
+        bottom:0,
+        left:0,
+        right:0,
+        justifyContent:'center',
+        alignItems:'center',
+        height:98,
+    },
 });
 
 

@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
         width:78,
         height:78,
         borderRadius:78,
-        backgroundColor:'#d33e19',
+        backgroundColor:'#0a8acd',
         marginHorizontal:8
     },
     ConvenientIcon:{

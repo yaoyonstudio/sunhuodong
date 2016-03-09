@@ -7,6 +7,7 @@ import React, {
     View,
     Image,
     ListView,
+    ProgressBarAndroid,
     TouchableHighlight
 } from 'react-native';
 
@@ -76,8 +77,9 @@ class Topic extends Component {
                 <View style={styles.TopicMenu}>
                     <Text style={styles.TopicMenuTitle}>专题</Text>
                 </View>
-                <View style={styles.TopicContainer}>
-                    <Text>Loading... please wait!</Text>
+                <View style={styles.TopicContent}>
+                    <ProgressBarAndroid styleAttr='Inverse'/>
+                    <Text style={{textAlign:'center'}}>载入中...</Text>
                 </View>
             </View>
         );
@@ -120,14 +122,13 @@ const styles = StyleSheet.create({
         paddingLeft:10
     },
     TopicMenuTitle:{
-        fontSize: 14,
+        fontSize: 16,
         fontWeight:"700",
         paddingLeft:10,
     },
     TopicContent:{
         flex:1,
-        paddingLeft:10,
-        paddingRight:10,
+        justifyContent:"center",
     },
     TopicItem:{
         paddingTop:8,
@@ -136,11 +137,14 @@ const styles = StyleSheet.create({
         alignItems:"flex-start",
         borderBottomWidth:1,
         borderColor:"#dddddd",
+        paddingLeft:10,
+        paddingRight:10,
     },
     TopicThumb:{
         width:88,
         alignItems:"flex-start",
-        justifyContent:"center"
+        justifyContent:"center",
+
     },
     TopicThumbImg:{
         alignSelf:"center",
@@ -160,7 +164,7 @@ const styles = StyleSheet.create({
         overflow:"hidden"
     },
     TopicExcerpt: {
-        marginTop:2,
+        marginTop:4,
         fontSize:12,
         textAlign: 'left',
         color: '#666666',

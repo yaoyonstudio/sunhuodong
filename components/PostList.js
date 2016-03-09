@@ -15,6 +15,7 @@ var GiftedSpinner = require('react-native-gifted-spinner');
 
 var TopBar = require('./TopBar');
 var PostDetail = require('./PostDetail');
+var PostDetailFromUrl = require('./PostDetailFromUrl');
 
 var PostList = React.createClass({
 
@@ -26,7 +27,7 @@ var PostList = React.createClass({
      * @param {object} options Inform if first load
      */
     _onFetch(page = 1, callback, options) {
-        let API_URL = this.props.Request_Post.API_URL;
+        var API_URL = this.props.Request_Post.API_URL;
         let CATID = this.props.Request_Post.CATID;
         let PAGE_SIZE = this.props.Request_Post.PAGE_SIZE;
 
@@ -50,12 +51,14 @@ var PostList = React.createClass({
      */
         _onPress(rowData) {
         this.props.navigator.push({
-            id:'PostDetail',
+            id:'PostDetailFromUrl',
             title:rowData.title.rendered,
-            component:PostDetail,
+            component:PostDetailFromUrl,
             passProps:{
                 postTitle:rowData.title.rendered,
-                post:rowData
+                api:this.props.Request_Post.API_URL,
+                pid:rowData.id,
+                //post:rowData
             }
         });
     },
@@ -366,7 +369,6 @@ var screenStyles = {
     navBar: {
         height: 64,
         backgroundColor: '#007aff',
-
         justifyContent: 'center',
         alignItems: 'center',
     },

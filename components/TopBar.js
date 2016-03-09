@@ -42,6 +42,10 @@ class TopBackShareBar extends Component {
 
 const styles = StyleSheet.create({
     TopBarContainer: {
+        position:'absolute',
+        top:0,
+        left:0,
+        right:0,
         width:Dimensions.get('window').width,
         height: 56,
         backgroundColor: '#0a8acd',

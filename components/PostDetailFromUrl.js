@@ -10,26 +10,68 @@ import React, {
     TouchableOpacity,
     Navigator,
     Dimensions,
+    ProgressBarAndroid,
     WebView,
     } from 'react-native';
 
 var TopBackShareBar = require('./TopBackShareBar');
 
+
+
 class PostDetail extends Component {
     constructor(props){
         super(props);
         this.state = {
+            loaded:false,
             width: Dimensions.get('window').width,
             height: Dimensions.get('window').height,
         };
     }
 
+    componentDidMount(){
+        this.fetchData();
+    };
+
+    fetchData(){
+        var PostId = this.props.pid;
+        var ApiUrl = this.props.api;
+
+        var REQUEST_URL = ApiUrl + '/' + PostId;
+
+        fetch(REQUEST_URL)
+            .then((response) => response.json())
+            .then((responseData) => {
+                this.setState({
+                    post:responseData,
+                    loaded:true,
+                });
+            })
+            .done();
+    };
+
+    renderLoadingView(){
+        return (
+            <View style={{flex:1}}>
+                <TopBackShareBar title={this.props.title} />
+                <View style={styles.loading}>
+                    <ProgressBarAndroid styleAttr='Inverse'/>
+                    <Text>载入中...</Text>
+                </View>
+            </View>
+        );
+    }
+
     render(){
         var w=this.state.width - 20;
-        var post = this.props.post;
-        var imgurl = ( typeof post.featuredimgurl !== 'undefined' ) ? post.featuredimgurl : '';
-        var title = (typeof post.title !== 'undefined' ) ? post.title : '';
-        var content = (typeof post.content !== 'undefined' ) ? post.content : '';
+
+        if(!this.state.loaded){
+            return this.renderLoadingView();
+        }
+
+        var imgurl = ( typeof this.state.post.featuredimgurl !== 'undefined' ) ? this.state.post.featuredimgurl : '';
+        var title = (typeof this.state.post.title !== 'undefined' ) ? this.state.post.title : '';
+        var date = (typeof this.state.post.date !== 'undefined') ? this.state.post.date.substring(0,10) : '';
+        var content = (typeof this.state.post.content !== 'undefined' ) ? this.state.post.content : '';
 
         var contentHTML = `
             <!DOCTYPE html>\n
@@ -42,7 +84,7 @@ class PostDetail extends Component {
                   .ViewContainer{width:100%;padding:10pt;box-sizing:border-box;-webkit-box-sizing:border-box;}
                   .ContentContainer{width:100%;overflow:hidden;}
                   .ContentContainer img {clear:both; display:block; margin:0 auto;text-align:center; width:${w}pt !important; max-width:100% !important; height:auto !important;}
-                  .ContentContainer h2 { font-size:18pt; padding: 10pt; margin: 0; text-align: center; color: #33f; }
+                  .ContentContainer h2 { font-size:18pt; padding: 0 10pt; margin: 0; text-align: center; color: #33f; }
                   .ContentContainer p{ font-size:12pt; }
                 </style>
               </head>
@@ -53,6 +95,12 @@ class PostDetail extends Component {
         contentHTML += '<h2>' ;
         contentHTML += title.rendered ;
         contentHTML += '</h2>' ;
+
+        contentHTML += '<p style="font-size: 9pt;color:#555;">';
+        contentHTML += date;
+        contentHTML += '</p>';
+
+        contentHTML += '<hr />';
 
         if(imgurl){
             contentHTML += '<image src="';
@@ -87,6 +135,12 @@ class PostDetail extends Component {
 const styles = StyleSheet.create({
     postDetailContainer:{
         flex:1,
+    },
+    loading:{
+        flex:1,
+        alignSelf:'center',
+        alignItems:'center',
+        justifyContent:'center'
     }
 });
 
