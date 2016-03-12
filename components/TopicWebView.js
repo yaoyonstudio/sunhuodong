@@ -31,16 +31,16 @@ class TopicWebView extends Component {
     render(){
         return (
             <View style={{flex:1}}>
-                <TopBackShareBar title={this.props.title} share={this.openModal.bind(this)} />
+                <TopBackShareBar title={this.props.post.title} share={this.openModal.bind(this)} />
                 <WebView
                     style={{height:this.state.height}}
-                    source={{uri:this.props.htmlUrl}}
+                    source={{uri:this.props.post.htmlUrl}}
                     startInLoadingState={true}
                     domStorageEnabled={false}
                     javaScriptEnabled={true}
                     >
                 </WebView>
-                <ShareBox />
+                <ShareBox shareData={this.props.post} />
             </View>
         );
     }

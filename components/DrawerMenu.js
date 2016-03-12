@@ -14,6 +14,7 @@ import React, {
 
 var Main = require('./Main');
 var Login = require('./Login');
+var TopicList = require('./TopicList');
 var PostList = require('./PostList');
 var PostDetail = require('./PostDetail');
 var PostDetailFromUrl = require('./PostDetailFromUrl');
@@ -101,14 +102,12 @@ class DrawerMenu extends Component {
                         {...route.passProps} />
                 );
                 break;
-            case 'PostListTest':
+            case 'TopicList':
                 var Request_Post = {
-                    API_URL:"http://www.sunhuodong.com/wp-json/wp/v2/posts",
-                    CATID:4,
-                    PAGE_SIZE:8,
+                    API_URL:"http://www.sunhuodong.com/api/topicHtml/index.php"
                 };
                 return (
-                    <PostList
+                    <TopicList
                         routeId={routeId}
                         navigator={navigator}
                         Request_Post={Request_Post}
@@ -287,7 +286,7 @@ class DrawerMenu extends Component {
 
                     <View style={styles.menuRight}>
                         <View style={styles.menuItem}>
-                            <TouchableOpacity onPress={() => this.goTo({id:'ZT',name:'专题'})}>
+                            <TouchableOpacity onPress={() => this.goTo({id:'TopicList',name:'专题'})}>
                                 <Image
                                     style={styles.menuItemImg}
                                     source={require('../img/2.png')}
@@ -324,7 +323,6 @@ class DrawerMenu extends Component {
                         </View>
                     </View>
                 </View>
-                <View style={{alignItems:'center',padding:20}}><TouchableOpacity onPress={()=>this.goToTest()}><Text style={{fontSize:30}}>分享测试</Text></TouchableOpacity></View>
             </View>
 
 	    );

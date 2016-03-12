@@ -7,13 +7,15 @@ import React, {
     View,
     Image,
     ListView,
+    Dimensions,
     ProgressBarAndroid,
     TouchableHighlight
 } from 'react-native';
 
+var TopBar = require('./TopBar');
 var TopicWebView = require('./TopicWebView');
 
-class Topic extends Component {
+class TopicList extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -22,6 +24,7 @@ class Topic extends Component {
             dataSource:new ListView.DataSource({
                 rowHasChanged:(row1,row2) => row1 !== row2,
             }),
+            width: Dimensions.get('window').width-40,
         };
     }
 
@@ -55,22 +58,20 @@ class Topic extends Component {
             name:post.title,
             component:TopicWebView,
             passProps:{
-                post:post
+                htmlUrl:post.htmlUrl,
+                title:post.title
             }
         });
     };
 
     renderPost(post){
         return (
-            <TouchableHighlight onPress={() => this.goTopicWebView(post)}  underlayColor='#dddddd'>
+            <TouchableHighlight style={{margin:10}} onPress={() => this.goTopicWebView(post)}  underlayColor='#dddddd'>
                 <View style={styles.TopicItem}>
-                    <View style={styles.TopicThumb}>
-                        <Image source={{uri:post.thumbUrl}} style={styles.TopicThumbImg} />
-                    </View>
-                    <View style={styles.TopicTxt}>
-                        <Text numberOfLines={2} style={styles.TopicTitle}>{post.title}</Text>
-                        <Text numberOfLines={3} style={styles.TopicExcerpt}>{post.excerpt}</Text>
-                    </View>
+                    <Text numberOfLines={2} style={styles.TopicTitle}>{post.title}</Text>
+                    <Image source={{uri:post.imgUrl}} style={[styles.TopicImg,{width:this.state.width,height:200}]} />
+                    <Text numberOfLines={3} style={styles.TopicExcerpt}>{post.excerpt}</Text>
+                    <Text numberOfLines={1} style={styles.TopicDetail}>查看专题详情</Text>
                 </View>
             </TouchableHighlight>
         );
@@ -79,9 +80,6 @@ class Topic extends Component {
     renderLoadingView(){
         return (
             <View style={styles.TopicContainer}>
-                <View style={styles.TopicMenu}>
-                    <Text style={styles.TopicMenuTitle}>专题</Text>
-                </View>
                 <View style={styles.TopicContent}>
                     <ProgressBarAndroid styleAttr='Inverse'/>
                     <Text style={{textAlign:'center'}}>载入中...</Text>
@@ -111,9 +109,7 @@ class Topic extends Component {
 
         return (
             <View style={styles.TopicContainer}>
-                <View style={styles.TopicMenu}>
-                    <Text style={styles.TopicMenuTitle}>专题</Text>
-                </View>
+                <TopBar onIconClicked={this.props.openDrawer} title={this.props.title} />
 
                 <View style={styles.TopicContent}>
                     <ListView
@@ -129,7 +125,7 @@ class Topic extends Component {
 const styles = StyleSheet.create({
     TopicContainer: {
         flex: 1,
-        height:256,
+        backgroundColor:"#f1f1f1"
     },
     TopicMenu:{
         justifyContent:"center",
@@ -152,18 +148,19 @@ const styles = StyleSheet.create({
     TopicItem:{
         paddingTop:8,
         paddingBottom:8,
-        flexDirection:"row",
-        alignItems:"flex-start",
-        borderBottomWidth:1,
-        borderColor:"#dddddd",
         paddingLeft:10,
         paddingRight:10,
-    },
-    TopicThumb:{
-        width:88,
         alignItems:"flex-start",
-        justifyContent:"center",
+        borderWidth:1,
+        borderColor:"#eeeeee",
+        borderRadius:4,
+        backgroundColor:"#ffffff",
 
+    },
+    TopicImg:{
+        alignItems:"center",
+        justifyContent:"center",
+        alignSelf:"center",
     },
     TopicThumbImg:{
         alignSelf:"center",
@@ -175,19 +172,25 @@ const styles = StyleSheet.create({
         paddingLeft:8,
     },
     TopicTitle: {
-        fontSize: 16,
+        fontSize: 20,
         fontWeight:"700",
-        color:"#555555",
+        color:"#333333",
         textAlign: 'left',
-        lineHeight:20,
-        overflow:"hidden"
+        marginVertical:10,
     },
     TopicExcerpt: {
         marginTop:4,
-        fontSize:12,
+        fontSize:14,
         textAlign: 'left',
         color: '#666666',
+        marginVertical:12,
     },
+    TopicDetail:{
+        fontSize:16,
+        fontWeight:"700",
+        color:"#333333",
+        marginBottom:10
+    }
 });
 
-module.exports = Topic;
+module.exports = TopicList;

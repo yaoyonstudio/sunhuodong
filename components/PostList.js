@@ -67,11 +67,11 @@ var PostList = React.createClass({
      * Render a row
      * @param {object} rowData Row data
      */
-        _renderRowView(rowData) {
+        _renderRowView(rowData, sectionID, rowID) {
         if(rowData.thumbnailurl){
             return (
                 <TouchableHighlight
-                    key={rowData.id}
+                    //key={rowID}
                     style={customStyles.row}
                     underlayColor='#c8c7cc'
                     onPress={() => this._onPress(rowData)}
@@ -244,7 +244,7 @@ var PostList = React.createClass({
      */
         _renderSeparatorView(sectionID,rowID) {
         return (
-            <View key={'${sectionID}-${rowID}'} style={customStyles.separator}/>
+            <View key={rowID} style={customStyles.separator} />
         );
     },
 
@@ -276,7 +276,7 @@ var PostList = React.createClass({
 
                     emptyView={this._renderEmptyView}
 
-                    //renderSeparator={(sectionID,rowID) => this._renderSeparatorView(sectionID,rowID)}
+                    renderSeparator={(sectionID,rowID) => this._renderSeparatorView(sectionID,rowID)}
 
                     withSections={false} // enable sections
                     //sectionHeaderView={this._renderSectionHeaderView}
@@ -337,9 +337,6 @@ var customStyles = {
     PostItem:{
         flex:1,
         flexDirection:'row',
-        borderBottomWidth:1,
-        borderColor:'#cccccc',
-        paddingBottom:6,
     },
     PostText:{
         flex:1,
@@ -354,7 +351,7 @@ var customStyles = {
         textAlign: 'left',
     },
     PostThumbnail: {
-        width: 108,
+        width: 98,
         height: 80,
         marginRight:12,
     },

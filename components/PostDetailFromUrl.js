@@ -84,7 +84,7 @@ class PostDetail extends Component {
                 <meta http-equiv="content-type" content="text/html; charset=utf-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" user-scalable=no">
                 <style type="text/css">
-                  body { margin: 0; padding: 0; background: #eee;width:100%;}
+                  body { margin: 0; padding: 0; background: #f1f1f1;width:100%;}
                   .ViewContainer{width:100%;padding:10pt;box-sizing:border-box;-webkit-box-sizing:border-box;}
                   .ContentContainer{width:100%;overflow:hidden;}
                   .ContentContainer img {clear:both; display:block; margin:0 auto;text-align:center; width:${w}pt !important; max-width:100% !important; height:auto !important;}
@@ -130,7 +130,7 @@ class PostDetail extends Component {
                     javaScriptEnabled={true}
                     >
                 </WebView>
-                <ShareBox />
+                <ShareBox shareData={this.state.post} />
             </View>
         );
 

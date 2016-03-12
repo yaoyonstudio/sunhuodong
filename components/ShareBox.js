@@ -38,6 +38,10 @@ class ShareBox extends Component {
 
     }
 
+    shareWeixin(shareData){
+        console.log(shareData);
+    }
+
     render() {
         return (
             //<View style={{width:this.state.width,height:this.state.height}}>
@@ -47,7 +51,7 @@ class ShareBox extends Component {
                     <View style={styles.separator}></View>
 
                     <View style={styles.shareItemContainer}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.shareWeixin(this.props.shareData)}>
                             <View style={styles.shareItem}>
                                 <Icon name="wechat" size={22} color="#3eb135" style={styles.shareItemIcon} />
                                 <Text style={styles.shareItemText}>分享给微信好友</Text>
